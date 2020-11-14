@@ -53,9 +53,9 @@ function getNationalParks(query, maxResults) {
         $('#js-error-message').text(`Something went wrong:  ${error.message}`);
         $('#results-list').empty();
       });
-  }
+}
 
-  function watchForm() {
+function watchForm() {
     $('form').submit( event => {
         console.log('running watchForm')
         event.preventDefault();
@@ -63,6 +63,6 @@ function getNationalParks(query, maxResults) {
         const maxResults = $('#js-max-results').val();
         getNationalParks( searchTerm, maxResults );
     });
-  }
+}
 
 $(watchForm);
