@@ -10,20 +10,34 @@ function formatQueryParams(params) {
 }
 
 function displayResults(responseJson) {
-    console.log(responseJson);
+    //console.log(responseJson);
+    //console.log(responseJson.data);
+
     for (let i = 0; i < responseJson.data.length; i++ ) {
-        $('#results-list').append(
+      console.log(responseJson.data[i]);
+
+      if (responseJson.data[i].addresses.length === 0) {
+        console.log("There is not address");
+        responseJson.data[i].addresses[0] = {
+          line1: "No address was given",
+          city: "",
+          stateCode: "",
+          postalCode: ""
+        }
+      }  
+
+      $('#results-list').append(
         ` <hr><li>
             <h3>${responseJson.data[i].fullName}</h3>
             <p><a href="${responseJson.data[i].url}">${responseJson.data[i].url}</a></p>
-            <p><b>Address:</b> ${responseJson.data[i].addresses[0].line1} ${responseJson.data[i].addresses[0].line2} ${responseJson.data[i].addresses[0].line3}  ${responseJson.data[i].states}, ${responseJson.data[i].addresses[0].postalCode}</p>
+            <p><b>State:</b> ${responseJson.data[i].states}</p>
+            <p><b>Address:</b> ${responseJson.data[i].addresses[0].line1} ${responseJson.data[i].addresses[0].city} ${responseJson.data[i].addresses[0].stateCode} ${responseJson.data[i].addresses[0].postalCode}</p>
             <p><b>Directions:</b> ${responseJson.data[i].directionsInfo}</p>
             <p><b>Description:</b> ${responseJson.data[i].description}</p>
         </li>`
-         )};
+      )};
     $('#results').removeClass('hidden');
 }
-  
 
 function getNationalParks(query, maxResults) {
     const params = {
