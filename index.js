@@ -4,17 +4,19 @@ const apiKey = 'api_key=MKjTuU0Sud51CpNITPYyNYZDeI3IwwRc85fA3C8b';
 const searchURL = 'https://developer.nps.gov/api/v1/parks';
 
 function formatQueryParams(params) {
-    const queryItems = Object.keys(params)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}` )
+  console.log('params=', params)
+    //const queryItems = Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    const queryItems = Object.keys(params).map(key => `${encodeURIComponent(key)}=${params[key]}`)
+    console.log('queryItems:',queryItems);
     return queryItems.join('&');
 }
 
 function displayResults(responseJson) {
-    //console.log(responseJson);
+    console.log(responseJson.data);
     //console.log(responseJson.data);
 
     for (let i = 0; i < responseJson.data.length; i++ ) {
-      console.log(responseJson.data[i]);
+      //console.log(responseJson.data[i]);
 
       if (responseJson.data[i].addresses.length === 0) {
         console.log("There is not address");
@@ -40,11 +42,13 @@ function displayResults(responseJson) {
 }
 
 function getNationalParks(query, maxResults) {
+  
+  console.log('Search parks:', query);
     const params = {
         stateCode: query,
         limit: maxResults
     };
-  
+
     const queryString = formatQueryParams(params);
     const url =  `${searchURL}?${queryString}&${apiKey}`;
   
@@ -75,7 +79,7 @@ function watchForm() {
         event.preventDefault();
         const searchTerm = $('#js-search-park').val();
         const maxResults = $('#js-max-results').val();
-        getNationalParks( searchTerm, maxResults );
+        getNationalParks(searchTerm, maxResults);
     });
 }
 
